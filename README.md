@@ -3,6 +3,10 @@
  ***Credits***
 Udacity Data Engineer Nanodegree Program
 
+Some dags has been proposed with airflow to met the rubric. It can be seen form the UI the DAG obtained that matchs the rubric and teh success of it running:
+
+
+
 ## Rubric
 
 General
