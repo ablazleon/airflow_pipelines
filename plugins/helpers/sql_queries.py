@@ -40,3 +40,101 @@ class SqlQueries:
                extract(month from start_time), extract(year from start_time), extract(dayofweek from start_time)
         FROM songplays
     """)
+    
+    create_table_staging_events = ("""
+        CREATE TABLE IF NOT EXISTS public.staging_events (
+            artist varchar(200),
+            auth varchar(200),
+            firstname varchar(200),
+            gender varchar(200),
+            iteminsession int4,
+            lastname varchar(200),
+            length numeric(18,0),
+            "level" varchar(200),
+            location varchar(200),
+            "method" varchar(200),
+            page varchar(200),
+            registration numeric(18,0),
+            sessionid int4,
+            song varchar(200),
+            status int4,
+            ts int8,
+            useragent varchar(200),
+            userid int4
+        );
+    """)
+    
+    create_table_staging_songs = ("""
+        CREATE TABLE IF NOT EXISTS public.staging_songs (
+                num_songs int4,
+                artist_id varchar(200),
+                artist_name varchar(200),
+                artist_latitude numeric(18,0),
+                artist_longitude numeric(18,0),
+                artist_location varchar(256),
+                song_id varchar(200),
+                title varchar(200),
+                duration numeric(18,0),
+                "year" int4
+            );
+    """)
+    
+    create_table_artist = ("""
+        CREATE TABLE IF NOT EXISTS public.artists (
+                artistid varchar(200) NOT NULL,
+                name varchar(200),
+                location varchar(200),
+                lattitude numeric(18,0),
+                longitude numeric(18,0)
+         );
+    """)
+    
+    create_table_songplays = ("""
+        CREATE TABLE IF NOT EXISTS public.songplays        
+            playid varchar(32) NOT NULL,
+            start_time timestamp NOT NULL,
+            userid int4 NOT NULL,
+            "level" varchar(200),
+            songid varchar(200),
+            artistid varchar(200),
+            sessionid int4,
+            location varchar(200),
+            user_agent varchar(200),
+            CONSTRAINT songplays_pkey PRIMARY KEY (playid)
+        );
+    """)
+    
+    create_table_users = ("""
+        CREATE TABLE IF NOT EXISTS public.users (
+            userid int4 NOT NULL,
+            first_name varchar(200),
+            last_name varchar(200),
+            gender varchar(200),
+            "level" varchar(200),
+            CONSTRAINT users_pkey PRIMARY KEY (userid)
+        );
+    """)
+    
+    create_table_songs = ("""
+        CREATE TABLE IF NOT EXISTS public.songs (
+            songid varchar(200) NOT NULL,
+            title varchar(200),
+            artistid varchar(200),
+            "year" int4,
+            duration numeric(18,0),
+            CONSTRAINT songs_pkey PRIMARY KEY (songid)
+        );
+    """)
+    
+    create_table_time = ("""
+        CREATE TABLE IF NOT EXISTS public."time" (
+            start_time timestamp NOT NULL,
+            "hour" int4,
+            "day" int4,
+            week int4,
+            "month" varchar(200),
+            "year" int4,
+            weekday varchar(200),
+            CONSTRAINT time_pkey PRIMARY KEY (start_time)
+        );
+    """)
