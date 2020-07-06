@@ -5,7 +5,9 @@ Udacity Data Engineer Nanodegree Program
 
 Some dags has been proposed with airflow to met the rubric. It can be seen form the UI the DAG obtained that matchs the rubric and teh success of it running:
 
+![dags_running_success](https://github.com/ablazleon/airflow_pipelines/blob/master/dags_running_success.png)
 
+![dag](https://github.com/ablazleon/airflow_pipelines/blob/master/dag.png)
 
 ## Rubric
 
