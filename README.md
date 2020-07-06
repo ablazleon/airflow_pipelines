@@ -35,6 +35,8 @@ Staging the data
 
 - [x] ***Task to stage JSON data is included in the DAG and uses the RedshiftStage operator***: There is a task that to stages data from S3 to Redshift. (Runs a Redshift copy statement)
 
+Inspired form this references
+
 - [x] ***Task uses params***: Instead of running a static SQL statement to stage the data, the task uses params to generate the copy statement dynamically
 
 - [x] ***Logging used***: The operator contains logging in different steps of the execution
