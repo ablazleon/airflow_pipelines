@@ -4,11 +4,11 @@ from airflow import DAG
 from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators import (StageToRedshiftOperator, LoadFactOperator,
                                 LoadDimensionOperator, DataQualityOperator)
-from helpers import Queries
+from helpers import SqlQueries
 
 # AWS_KEY = os.environ.get('AWS_KEY')
 # AWS_SECRET = os.environ.get('AWS_SECRET')
-s3_bucket = 'udacity-dend-warehouse'
+s3_bucket = 'udacity-dend'
 song_s3_key = "song_data"
 log_s3_key = "log-data"
 log_json_file = "log_json_path.json"
@@ -51,9 +51,9 @@ stage_songs_to_redshift = StageToRedshiftOperator(
     aws_credentials_id = "aws_credentials",
     redshift_conn_id = 'redshift',
     s3_bucket = "udacity-dend-airflow-test",
-    s3_key="song_data",
-    table="staging_songs",
-    stmt=Queries.create_table_staging_songs
+    s3_key = "song_data",
+    table = "staging_songs",
+    statement = SqlQueries.create_table_staging_songs
 )
 
 load_songplays_table = LoadFactOperator(
@@ -62,8 +62,8 @@ load_songplays_table = LoadFactOperator(
     provide_context = True,
     aws_credentials_id = "aws_credentials",
     redshift_conn_id = 'redshift',
-    statement = Queries.create_table_songplays,
-    sql_query = Queries.songplay_table_insert
+    statement = SqlQueries.create_table_songplays,
+    query = SqlQueries.songplay_table_insert
 )
 
 load_user_dimension_table = LoadDimensionOperator(
@@ -72,8 +72,8 @@ load_user_dimension_table = LoadDimensionOperator(
     provide_context = True,
     aws_credentials_id = "aws_credentials",
     redshift_conn_id = 'redshift',
-    statement = Queries.create_table_users,
-    sql_query = Queries.user_table_insert
+    statement = SqlQueries.create_table_users,
+    query = SqlQueries.user_table_insert
 )
 
 load_song_dimension_table = LoadDimensionOperator(
@@ -82,8 +82,8 @@ load_song_dimension_table = LoadDimensionOperator(
     provide_context = True,
     aws_credentials_id = "aws_credentials",
     redshift_conn_id = 'redshift',
-    statement = Queries.create_table_songs,
-    sql_query = Queries.song_table_insert
+    statement = SqlQueries.create_table_songs,
+    query = SqlQueries.song_table_insert
 )
 
 load_artist_dimension_table = LoadDimensionOperator(
@@ -93,25 +93,25 @@ load_artist_dimension_table = LoadDimensionOperator(
     aws_credentials_id = "aws_credentials",
     redshift_conn_id = 'redshift',
     statement = Queries.create_table_artist,
-    sql_query = Queries.artist_table_insert
+    query = Queries.artist_table_insert
 )
 
 load_time_dimension_table = LoadDimensionOperator(
-    task_id='Load_time_dim_table',
-    dag=dag,
-    provide_context=True,
-    aws_credentials_id="aws_credentials",
-    redshift_conn_id='redshift',
-    create_stmt=Queries.create_table_time,
-    sql_query=Queries.time_table_insert
+    task_id = 'Load_time_dim_table',
+    dag = dag,
+    provide_context = True,
+    aws_credentials_id = "aws_credentials",
+    redshift_conn_id = 'redshift',
+    statement = SqlQueries.create_table_time,
+    query = SqlQueries.time_table_insert
 )
 
 run_quality_checks = DataQualityOperator(
-    task_id='Run_data_quality_checks',
-    dag=dag,
-    provide_context=True,
-    aws_credentials_id="aws_credentials",
-    redshift_conn_id='redshift',
+    task_id = 'Run_data_quality_checks',
+    dag = dag,
+    provide_context = True,
+    aws_credentials_id = "aws_credentials",
+    redshift_conn_id = 'redshift',
 )
 
 end_operator = DummyOperator(task_id='Stop_execution',  dag=dag)
