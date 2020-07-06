@@ -43,6 +43,8 @@ Inspired form this references
 
 - [x] ***The database connection is created by using a hook and a connection***: The SQL statements are executed by using a Airflow hook
 
+This iamge shown the connections created in the admin view
+
 ![connections](https://github.com/ablazleon/airflow_pipelines/blob/master/connections.png)
 
 Loading dimensions and facts
