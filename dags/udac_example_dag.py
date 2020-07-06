@@ -50,7 +50,7 @@ stage_songs_to_redshift = StageToRedshiftOperator(
     provide_context = True,
     aws_credentials_id = "aws_credentials",
     redshift_conn_id = 'redshift',
-    s3_bucket = "udacity-dend-airflow-test",
+    s3_bucket = s3_bucket,
     s3_key = "song_data",
     table = "staging_songs",
     statement = SqlQueries.create_table_staging_songs
@@ -92,8 +92,8 @@ load_artist_dimension_table = LoadDimensionOperator(
     provide_context = True,
     aws_credentials_id = "aws_credentials",
     redshift_conn_id = 'redshift',
-    statement = Queries.create_table_artist,
-    query = Queries.artist_table_insert
+    statement = SqlQueries.create_table_artist,
+    query = SqlQueries.artist_table_insert
 )
 
 load_time_dimension_table = LoadDimensionOperator(
